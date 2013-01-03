@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<title>ARC Inbox - <%= yield(:title) || "ARC"  %></title>
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" media="all" />
+<script type="text/javascript" src="/javascripts/jquery-1.2.6.js"></script>
+
+</head>
+<body>
+<div id="masthead">
+ARC Inbox
+</div>
+<br/>
+<div id="logo">
+	<div id="logo-middle">
+		<span id="main_header"><%= yield(:main_header) %></span>
+		<div class="navigation"><%= yield(:extra_button) %></div>
+	</div>
+	<div id="logo-right">
+		<% if current_user != nil -%>
+		<span id="login-msg"><%= yield(:login_msg) %></span>
+		<div class="navigation">
+			<%= link_to "Log Out", logout_path %>
+			<%= if yield(:link_myaccount) == "yes"
+					link_divider() + link_to("My Account", update_account_path)
+				end %>
+		 </div>
+		<% end -%>
+	</div>
+	<div id="instructions"><%= yield(:instructions) %></div>
+</div>
+<div id="content">
+<%= yield %>
+<br /><hr>
+<div id="footer" >Please report technical issues concerning this site to: <%= webmaster_link %></div>
+</div>
+</body>
+</html>

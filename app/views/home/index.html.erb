@@ -1,0 +1,31 @@
+<% title "Log In" %>
+<% main_header "" -%>
+<% extra_button "" -%>
+<% instructions "Welcome to the ARC Inbox, where you can submit metadata for NINES, 18thConnect and MESA. If you already have an account, log in below. Otherwise contact the #{main_editor_link}." -%>
+<% form_tag session_path do -%>
+<table>
+	<tr>
+		<td class="field-label" ><label for="email">Email:</label></td>
+		<td><%= text_field_tag 'email', nil, { :size => "50" } %></td>
+	</tr>
+	<tr>
+		<td class="field-label"><label for="password">Password:</label></td>
+		<td><%= password_field_tag 'password', nil, { :size => "50" } %></td>
+	</tr>
+	<tr>
+<!-- Uncomment this if you want this functionality
+<p><label for="remember_me">Remember me:</label>
+<%= check_box_tag 'remember_me' %></p>
+-->
+		<td><%= submit_tag 'Log in' %></td>
+	</tr>
+	<tr>
+		<td class="navigation">
+		<br/><%= link_to "Forgot password?", forgot_password_path %>
+		</td>
+	</tr>
+</table>
+<% end -%>
+<% if flash[:notice] -%> 
+<div id="notice"><%= flash[:notice] %></div> 
+<% end -%>
