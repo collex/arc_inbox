@@ -16,7 +16,7 @@ group :assets do
   #gem 'libv8', '~> 3.11.8' # to make therubyracer compile
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', '~> 0.10.0'
 
   gem 'uglifier', '>= 1.0.3'
 end
