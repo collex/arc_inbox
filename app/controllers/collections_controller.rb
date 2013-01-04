@@ -1,6 +1,4 @@
 class CollectionsController < ApplicationController
-  layout "main"
-
   before_filter :has_permission?
 
   def editor
@@ -144,11 +142,11 @@ class CollectionsController < ApplicationController
 
     begin    
       case Collection.to_status_string(status.to_i)
-      when "In Progress": UserMailer.deliver_in_progress(get_contributor(id), collection)
-      when "In Peer Review": UserMailer.deliver_in_peer_review(get_contributor(id), collection)
-      when "Is Staged": UserMailer.deliver_is_staged(get_contributor(id), collection)
-      when "In Production": UserMailer.deliver_in_production(get_contributor(id), collection)
-      when "Deleted": UserMailer.deliver_editor_deletes(get_contributor(id), collection)
+      when "In Progress" then UserMailer.deliver_in_progress(get_contributor(id), collection)
+      when "In Peer Review" then UserMailer.deliver_in_peer_review(get_contributor(id), collection)
+      when "Is Staged" then UserMailer.deliver_is_staged(get_contributor(id), collection)
+      when "In Production" then UserMailer.deliver_in_production(get_contributor(id), collection)
+      when "Deleted" then UserMailer.deliver_editor_deletes(get_contributor(id), collection)
       else logger.info("status changed to something that doesn't have a confirmation message: #{status}")
       end
     rescue Exception => msg

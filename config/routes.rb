@@ -1,31 +1,30 @@
 ArcInbox::Application.routes.draw do
+  devise_for :users
+
 	resources :editorial_board_members
 	resources :uploaded_files
 	resources :collections
-	resources :users do
-		member do
-			put 'suspend'
-			put 'unsuspend'
-			delete 'purge'
-		end
-	end
-	resource :session
+#	resource :session
 
+  put 'suspend', :controller => 'users', :action => 'update_account'
+  put 'unsuspend', :controller => 'users', :action => 'update_account'
+  delete 'purge', :controller => 'users', :action => 'update_account'
 	get '/confirm_submission', :controller => 'collections', :action => 'confirm_submission'
 	get '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
-	get '/signup', :controller => 'users', :action => 'new'
-	get '/login', :controller => 'sessions', :action => 'new'
-	get '/logout', :controller => 'sessions', :action => 'destroy'
+	#get '/signup', :controller => 'users', :action => 'new'
+	#get '/login', :controller => 'sessions', :action => 'new'
+	#get '/logout', :controller => 'sessions', :action => 'destroy'
 	get '/contributor', :controller => 'collections', :action => 'contributor'
 	get '/editor', :controller => 'collections', :action => 'editor'
 	get '/resubmit', :controller => 'collections', :action => 'resubmit'
-	get '/forgot_password', :controller => 'users', :action => 'forgot_password'
+	#get '/forgot_password', :controller => 'users', :action => 'forgot_password'
 	get '/update_account', :controller => 'users', :action => 'update_account'
 	get '/delete_account', :controller => 'users', :action => 'delete_account'
 	get '/maintain_editorial_board', :controller => 'editorial_board_members', :action => 'index'
 	get '/added_user_confirmation', :controller => 'users', :action => 'added_user_confirmation'
 
 	root :to => "home#index"
+	get "/test_exception_notifier" => "home#test_exception_notifier"
 
 	# The priority is based upon order of creation:
 	# first created -> highest priority.

@@ -7,7 +7,7 @@ body {
 }
 
 #masthead { 
-        background-image: url(/images/arc_mast.jpg);
+        background-image: image-url("arc_mast.png");
         background-repeat: no-repeat;   
         text-align: center;
         color:#848180;
@@ -81,6 +81,15 @@ td.details { font-family: times, serif; margin:30px; padding:4px 10px 4px 10px; 
 
 /* For the label to the left or above input fields */
 .field-label { font-family: arial, sans-serif; }
+
+#new_user {
+	label {
+		position: absolute;
+	}
+	input {
+		margin-left: 150px;
+	}
+}
 
 /* For all links that go between pages of this app */
 .navigation { font-family: arial, sans-serif; }

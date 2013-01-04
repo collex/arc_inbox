@@ -1,5 +1,4 @@
 class UploadedFilesController < ApplicationController
-  layout "main"
   before_filter :must_be_editor
 
   # GET /uploaded_files

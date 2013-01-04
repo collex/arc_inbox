@@ -24,6 +24,7 @@ gem 'jquery-rails'
 # These were the plugins in vendor plugins
 #gem "restful_authentication"
 gem 'devise'
+gem 'devise-encryptable'
 gem "exception_notification"
 gem 'pothoven-attachment_fu'
 #gem "paperclip"

@@ -18,7 +18,7 @@ ARC Inbox
 		<div class="navigation"><%= yield(:extra_button) %></div>
 	</div>
 	<div id="logo-right">
-		<% if current_user != nil -%>
+		<% if user_signed_in? -%>
 		<span id="login-msg"><%= yield(:login_msg) %></span>
 		<div class="navigation">
 			<%= link_to "Log Out", logout_path %>

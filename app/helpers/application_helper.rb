@@ -8,7 +8,7 @@ module ApplicationHelper
     content_for(:extra_button) { text }
   end
   def instructions(text)
-    content_for(:instructions) { text }
+    content_for(:instructions) { raw(text) }
   end
   def main_header(text)
     content_for(:main_header) { text }
@@ -43,7 +43,7 @@ module ApplicationHelper
   end
   
   def webmaster_link
-    "#{js_antispam_email_link('NINES Webmaster', 'nick@performantsoftware.com', 'Webmaster')}"
+    raw("#{js_antispam_email_link('Arc Inbox Webmaster', WEBMASTER_EMAIL, 'Webmaster')}")
   end
   
   def link_divider

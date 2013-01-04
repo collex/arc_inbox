@@ -33,6 +33,9 @@ master_editor:
   name: "Eddie Editor"
   email: "eddie@example.com"
 
+webmaster:
+  email: "webmaster@example.com"
+
 ##########################
 ### Skin
 ##########################

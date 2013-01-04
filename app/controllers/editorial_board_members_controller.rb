@@ -1,6 +1,4 @@
 class EditorialBoardMembersController < ApplicationController
-  layout "main"
-
   before_filter :must_be_editor
   
   # GET /editorial_board_members
