@@ -1,6 +1,6 @@
 <% title "Editor" %>
-<% main_header "Contributions to NINES" -%>
-<% extra_button "#{goto_contributor_link}" -%>
+<% main_header "Contributions to #{PROGRAM_NAME}" -%>
+<% extra_button goto_contributor_link -%>
 <% login_msg "You are logged in as:<br /> #{current_user.real_name}." -%>
 <% link_myaccount "yes" %>
 <% instructions "Below is a list of all the pending contributions and their current status. As you work through the list, change the status of the item. That will send an email to the contributor notifying them that their contribution has changed. The Public notes are visible to the contributor; the Admin notes are only visible on this page." -%>
@@ -18,11 +18,6 @@
 	var textarea = '<textarea Name="textarea" id="textarea" rows="10" cols="43" onblur="onTextAreaChange()">$(STARTING_TEXT)</textarea>';
 	var textarea_form_tag = '<%= form_tag( { :action => "textarea_changed", :id => 10101010 }, { :id => "textarea-form" } ) %>';
 </script>
-
-
-<script type="text/javascript" src="javascripts/update_status.js" ></script>
-<script type="text/javascript" src="javascripts/update_classification.js" ></script>
-<script type="text/javascript" src="javascripts/update_textarea.js" ></script>
 
 <%   @collections = Collection.get_all() -%>
 <%   @is_editor = true -%>

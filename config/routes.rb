@@ -3,7 +3,18 @@ ArcInbox::Application.routes.draw do
 
 	resources :editorial_board_members
 	resources :uploaded_files
-	resources :collections
+	resources :collections do
+		collection do
+			post 'new_submission'
+			post 'resubmit_submission'
+			post 'resubmit'
+			post 'denial_comment_submitted'
+			post 'textarea_changed'
+			post 'classification_changed'
+			post 'status_changed'
+			post 'cancel_submission'
+		end
+	end
 #	resource :session
 
   put 'suspend', :controller => 'users', :action => 'update_account'
@@ -11,7 +22,8 @@ ArcInbox::Application.routes.draw do
   delete 'purge', :controller => 'users', :action => 'update_account'
 	get '/confirm_submission', :controller => 'collections', :action => 'confirm_submission'
 	get '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
-	#get '/signup', :controller => 'users', :action => 'new'
+	get '/signup', :controller => 'users', :action => 'new'
+	post '/signup', controller: 'users', action: 'create'
 	#get '/login', :controller => 'sessions', :action => 'new'
 	#get '/logout', :controller => 'sessions', :action => 'destroy'
 	get '/contributor', :controller => 'collections', :action => 'contributor'

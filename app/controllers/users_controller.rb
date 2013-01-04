@@ -6,6 +6,7 @@ class UsersController < ApplicationController
   
   # render new.rhtml
   def new
+	  @user = User.new
     return unless must_be_editor
   end
 
@@ -108,6 +109,21 @@ class UsersController < ApplicationController
   #    render :action => 'new'
   #  end
   #end
+
+	def create
+		@user = User.new(params[:user])
+		new_pass = generate_password()
+		@user.password = new_pass
+		@user.password_confirmation = new_pass
+
+		if @user.save
+			flash[:notice] = 'User was successfully created.'
+			UserMailer.signup_notification(@user, new_pass).deliver
+				redirect_to '/added_user_confirmation'
+		else
+			render :action => "new"
+		end
+	end
 
   def activate
     self.current_user = params[:activation_code].blank? ? false : User.find_by_activation_code(params[:activation_code])

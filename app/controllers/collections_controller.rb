@@ -180,10 +180,10 @@ class CollectionsController < ApplicationController
     redirect_to :action => 'contributor'
   end
 
-  def logout
-    current_user = nil
-    redirect_to :controller => 'home', :action => 'index'
-  end
+  #def logout
+  #  current_user = nil
+  #  redirect_to :controller => 'home', :action => 'index'
+  #end
   
   def confirm_submission
   end
@@ -312,7 +312,7 @@ class CollectionsController < ApplicationController
       return
     end
 
-    @collections = Collection.find(:all)
+    @collections = Collection.all
 
     respond_to do |format|
       format.html # index.html.erb

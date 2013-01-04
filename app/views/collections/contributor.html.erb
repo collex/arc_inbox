@@ -1,6 +1,6 @@
 <% title "My Contributions" %>
 <% main_header "My Contributions" -%>
-<% extra_button "#{goto_editor_link}" -%>
+<% extra_button goto_editor_link -%>
 <% login_msg "You are logged in as:<br /> #{current_user.real_name}." -%>
 <% link_myaccount "yes" %>
 <% instructions "You can submit new work with the form below or manage your existing contributions by using the buttons provided on the contribution table. If you have trouble, contact the #{main_editor_link}." -%>
@@ -10,8 +10,6 @@
 	var textarea = '<textarea Name="textarea" id="textarea" rows="10" cols="43" onblur="onTextAreaChange()">$(STARTING_TEXT)</textarea>';
 	var textarea_form_tag = '<%= form_tag( { :action => "textarea_changed", :id => 10101010 }, { :id => "textarea-form" } ) %>';
 </script>
-
-<script type="text/javascript" src="javascripts/update_textarea.js" ></script>
 
 <h2>Submit a new collection:</h2>
 <%= form_tag( { :action => 'new_submission' }, { :id => "new-form", :multipart => true } ) %>

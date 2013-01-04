@@ -21,9 +21,9 @@ ARC Inbox
 		<% if user_signed_in? -%>
 		<span id="login-msg"><%= yield(:login_msg) %></span>
 		<div class="navigation">
-			<%= link_to "Log Out", logout_path %>
+			<%= link_to('Log Out', destroy_user_session_path, :method => :delete) %>
 			<%= if yield(:link_myaccount) == "yes"
-					link_divider() + link_to("My Account", update_account_path)
+					raw(link_divider() + link_to("My Account", edit_user_registration_path))
 				end %>
 		 </div>
 		<% end -%>

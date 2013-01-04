@@ -81,7 +81,7 @@ class User < ActiveRecord::Base
 
   def self.create_role_combo(f)
     ctrl = roles.create_combo_on_form(f, :role)
-    return ctrl.gsub('>Contributor</option>', ' selected="selected">Contributor</option>');
+    return ctrl.gsub('>Contributor</option>', ' selected="selected">Contributor</option>')
   end
   
   def is_editor

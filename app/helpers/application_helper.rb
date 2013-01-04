@@ -15,7 +15,7 @@ module ApplicationHelper
   end
   
   def login_msg(text)
-    content_for(:login_msg) { text }
+    content_for(:login_msg) { raw(text) }
   end
   def link_myaccount(text)
     content_for(:link_myaccount) { text }
@@ -47,10 +47,32 @@ module ApplicationHelper
   end
   
   def link_divider
-    "&nbsp;•&nbsp;"
+    raw("&nbsp;•&nbsp;")
   end
-  
-  
+
+  def errors_for(object, message=nil)
+	  html = ""
+	  unless object.blank? || object.errors.blank?
+		  html << "<div class='formErrors #{object.class.name.humanize.downcase}Errors'>\n"
+		  if message.blank?
+			  if object.new_record?
+				  html << "\t\t<h5>There was a problem creating the #{object.class.name.humanize.downcase}</h5>\n"
+			  else
+				  html << "\t\t<h5>There was a problem updating the #{object.class.name.humanize.downcase}</h5>\n"
+			  end
+		  else
+			  html << "<h5>#{message}</h5>"
+		  end
+		  html << "\t\t<ul>\n"
+		  object.errors.full_messages.each do |error|
+			  html << "\t\t\t<li>#{error}</li>\n"
+		  end
+		  html << "\t\t</ul>\n"
+		  html << "\t</div>\n"
+	  end
+	  raw(html)
+  end
+
   private
   #
   # The following was cribbed from http://unixmonkey.net/?p=20
