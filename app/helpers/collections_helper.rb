@@ -1,3 +1,4 @@
+#encoding: utf-8
 module CollectionsHelper
   def format_notes_for_html(notes_str)
     str = h(notes_str)

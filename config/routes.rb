@@ -1,67 +1,86 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :editorial_board_members
+ArcInbox::Application.routes.draw do
+	resources :editorial_board_members
+	resources :uploaded_files
+	resources :collections
+	resources :users do
+		member do
+			put 'suspend'
+			put 'unsuspend'
+			delete 'purge'
+		end
+	end
+	resource :session
 
-  map.resources :uploaded_files
+	get '/confirm_submission', :controller => 'collections', :action => 'confirm_submission'
+	get '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
+	get '/signup', :controller => 'users', :action => 'new'
+	get '/login', :controller => 'sessions', :action => 'new'
+	get '/logout', :controller => 'sessions', :action => 'destroy'
+	get '/contributor', :controller => 'collections', :action => 'contributor'
+	get '/editor', :controller => 'collections', :action => 'editor'
+	get '/resubmit', :controller => 'collections', :action => 'resubmit'
+	get '/forgot_password', :controller => 'users', :action => 'forgot_password'
+	get '/update_account', :controller => 'users', :action => 'update_account'
+	get '/delete_account', :controller => 'users', :action => 'delete_account'
+	get '/maintain_editorial_board', :controller => 'editorial_board_members', :action => 'index'
+	get '/added_user_confirmation', :controller => 'users', :action => 'added_user_confirmation'
 
-  map.resources :collections
+	root :to => "home#index"
 
-  map.resources :users
+	# The priority is based upon order of creation:
+	# first created -> highest priority.
 
-  map.resource :session
+	# Sample of regular route:
+	#   match 'products/:id' => 'catalog#view'
+	# Keep in mind you can assign values other than :controller and :action
 
-  #map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate'
-  map.confirm_submission '/confirm_submission', :controller => 'collections', :action => 'confirm_submission'
-  map.resources :users, :member => { :suspend => :put, :unsuspend => :put, :purge => :delete }
-  map.activate '/activate/:activation_code', :controller => 'users', :action => 'activate', :activation_code => nil
-  map.signup '/signup', :controller => 'users', :action => 'new'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.contributor '/contributor', :controller => 'collections', :action => 'contributor'
-  map.editor '/editor', :controller => 'collections', :action => 'editor'
-  map.resubmit '/resubmit', :controller => 'collections', :action => 'resubmit'
-  map.forgot_password '/forgot_password', :controller => 'users', :action => 'forgot_password'
-  map.update_account '/update_account', :controller => 'users', :action => 'update_account'
-  map.delete_account '/delete_account', :controller => 'users', :action => 'delete_account'
-  map.maintain_editorial_board '/maintain_editorial_board', :controller => 'editorial_board_members', :action => 'index'
-  map.added_user_confirmation '/added_user_confirmation', :controller => 'users', :action => 'added_user_confirmation'
-  
-  # The priority is based upon order of creation: first created -> highest priority.
+	# Sample of named route:
+	#   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
+	# This route can be invoked with purchase_url(:id => product.id)
 
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
+	# Sample resource route (maps HTTP verbs to controller actions automatically):
+	#   resources :products
 
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
+	# Sample resource route with options:
+	#   resources :products do
+	#     member do
+	#       get 'short'
+	#       post 'toggle'
+	#     end
+	#
+	#     collection do
+	#       get 'sold'
+	#     end
+	#   end
 
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
+	# Sample resource route with sub-resources:
+	#   resources :products do
+	#     resources :comments, :sales
+	#     resource :seller
+	#   end
 
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
+	# Sample resource route with more complex sub-resources
+	#   resources :products do
+	#     resources :comments
+	#     resources :sales do
+	#       get 'recent', :on => :collection
+	#     end
+	#   end
 
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
+	# Sample resource route within a namespace:
+	#   namespace :admin do
+	#     # Directs /admin/products/* to Admin::ProductsController
+	#     # (app/controllers/admin/products_controller.rb)
+	#     resources :products
+	#   end
 
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
+	# You can have the root of your site routed with "root"
+	# just remember to delete public/index.html.
+	# root :to => "welcome#index"
 
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-  map.root :controller => "home", :action => "index"
+	# See how all your routes lay out with "rake routes"
 
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+	# This is a legacy wild controller route that's not recommended for RESTful applications.
+	# Note: This route will make all actions in every controller accessible via GET requests.
+	# match ':controller(/:action(/:id(.:format)))'
 end
