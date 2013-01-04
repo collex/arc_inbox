@@ -31,6 +31,8 @@ ARC Inbox
 	<div id="instructions"><%= yield(:instructions) %></div>
 </div>
 <div id="content">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
 <%= yield %>
 <br /><hr>
 <div id="footer" >Please report technical issues concerning this site to: <%= webmaster_link %></div>
