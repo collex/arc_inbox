@@ -45,6 +45,7 @@ after "deploy:assets:symlink" do
 	# These files aren't in git, so initially they need to be manually created in the shared directory.
 	run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
 	run "ln -nfs #{shared_path}/config/site.yml #{release_path}/config/site.yml"
+	run "ln -fs #{shared_path}/uploads #{release_path}/uploads"
 end
 
 after "deploy", "deploy:migrate"
