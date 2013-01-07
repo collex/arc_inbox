@@ -67,7 +67,7 @@ class CollectionsController < ApplicationController
     begin
       UserMailer.resubmit(current_user, Collection.find(id)).deliver
     rescue Exception => msg
-      logger.error("**** ERROR: Can't send email: " + msg)
+      logger.error("**** ERROR: Can't send email: " + msg.to_s)
     end
     redirect_to :action => 'confirm_submission', :id => id, :controller => 'collections' #confirm_submission_path
   end
@@ -111,7 +111,7 @@ class CollectionsController < ApplicationController
           UserMailer.contributor_changed_note(Collection.find(id)).deliver
         end
       rescue Exception => msg
-        logger.error("**** ERROR: Can't send email: " + msg)
+        logger.error("**** ERROR: Can't send email: " + msg.to_s)
       end
     end
     redirect_to :action => redirect_action
@@ -150,7 +150,7 @@ class CollectionsController < ApplicationController
       else logger.info("status changed to something that doesn't have a confirmation message: #{status}")
       end
     rescue Exception => msg
-      logger.error("**** ERROR: Can't send email: " + msg)
+      logger.error("**** ERROR: Can't send email: " + msg.to_s)
     end
     redirect_to :action => 'editor'
   end
@@ -175,7 +175,7 @@ class CollectionsController < ApplicationController
     begin
       UserMailer.contributor_deletes(Collection.find(id)).deliver
     rescue Exception => msg
-      logger.error("**** ERROR: Can't send email: " + msg)
+      logger.error("**** ERROR: Can't send email: " + msg.to_s)
     end
     redirect_to :action => 'contributor'
   end

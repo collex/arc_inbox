@@ -3,6 +3,8 @@ class UserMailer < ActionMailer::Base
 
 	def generic_send(user, to_type, subject, options = {})
 		@user = user
+		@name = user.real_name if user.present?
+		@main_editor = main_editor_link_clear
 		@url = ActionMailer::Base.default_url_options[:host]
 		to = case to_type
 			     when :editors
@@ -23,13 +25,11 @@ class UserMailer < ActionMailer::Base
 	end
 
 	def new_submission(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
 		generic_send(user, :editors_and_user, "New Submission Received")
 	end
 
 	def resubmit(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
 		generic_send(user, :editors_and_user, "Project Resubmitted")
 	end
@@ -43,55 +43,45 @@ class UserMailer < ActionMailer::Base
 	end
 
 	def in_progress(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
 		generic_send(user, :user, "Submission review in progress")
 	end
 
 	def in_peer_review(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
-		@main_editor = main_editor_link_clear
 		@classification = Collection.to_classification_string(collection.classification)
 		generic_send(user, :editors_and_board, "Submission now in peer review", { classification: collection.classification })
 	end
 
 	def is_staged(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
-		@main_editor = main_editor_link_clear
 		generic_send(user, :editors_and_user, "Submission is staged")
 	end
 
 	def in_production(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
-		@main_editor = main_editor_link_clear
 		@classification = Collection.to_classification_string(collection.classification)
 		generic_send(user, :user, "Submission is now in production")
 	end
 
 	def editor_deletes(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
-		@main_editor = main_editor_link_clear
 		generic_send(user, :user, "Submission deleted by editor")
 	end
 
 	def editor_changed_note(user, collection)
-		@name = user.real_name
 		@project_info = project_info_with_notes(collection)
 		generic_send(user, :user, "Editor changed note")
 	end
 
 	def contributor_deletes(collection)
 		@project_info = project_info_with_notes(collection)
-		generic_send(user, :editors, "Submission deleted by contributor")
+		generic_send(nil, :editors, "Submission deleted by contributor")
 	end
 
 	def contributor_changed_note(collection)
 		@project_info = project_info_with_notes(collection)
-		generic_send(user, :editors, "Contributor changed note")
+		generic_send(nil, :editors, "Contributor changed note")
 	end
 
 	#def user_account_changed(user, old_real_name, old_email, old_institution)
@@ -115,7 +105,6 @@ class UserMailer < ActionMailer::Base
 	#
 	def account_deleted(user)
 		@name = user.real_name
-		@main_editor = main_editor_link_clear
 		generic_send(user, :editors_and_user, "Account Disabled")
 	end
 

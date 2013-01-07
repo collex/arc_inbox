@@ -42,7 +42,7 @@ class UsersController < ApplicationController
     begin
       UserMailer.account_deleted(user).deliver
     rescue Exception => msg
-      logger.error("**** ERROR: Can't send email: " + msg)
+      logger.error("**** ERROR: Can't send email: " + msg.to_s)
     end
     user.update_attribute(:disabled, "1")
     #user.destroy
