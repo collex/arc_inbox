@@ -11,11 +11,11 @@ class UserMailer < ActionMailer::Base
 				create_editor_list
 			     when :editors_and_user
 				create_to_list_with_editors(user)
-				:user
+				when :user
 				user.email
-				:master
+				when :master
 				MASTER_EDITOR_EMAIL
-				:editors_and_board
+				when :editors_and_board
 				create_to_list_with_editors_and_board(user.email, options[:classification])
 			     else
 				raise "Unexpected to: #{to_type}"
@@ -104,16 +104,13 @@ class UserMailer < ActionMailer::Base
 	#end
 	#
 	def account_deleted(user)
-		@name = user.real_name
 		generic_send(user, :editors_and_user, "Account Disabled")
 	end
 
 	def signup_notification(user, password)
-		@user = user
 		@password = password
-		@url = ActionMailer::Base.default_url_options[:host]
 
-		mail(to: @user.email, from: MASTER_EDITOR_EMAIL, subject: "[#{PROGRAM_NAME}] Account Created")
+		generic_send(user, :user, "Account Created")
 	end
 
 	private
