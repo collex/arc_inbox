@@ -33,16 +33,16 @@ class CollectionsController < ApplicationController
     uploaded_file = save_file(file_name, project_name)
 
     rec = { :contributor_id => current_user.id, :last_editor_id => nil, :latest_file_id => uploaded_file.id, 
-      :current_status => Collection.to_status_int("New"), :classification => Collection.to_classification_int("[Not Classified]"), :notes => notes, :created_at => Time.now, :updated_at => Time.now,
+      :current_status => Collection.to_status_int("New"), :classification => Collection.to_classification_int("[Not Classified]"), :notes => notes,
       :admin_notes => "", :project_name => project_name, :project_url => project_url, :default_thumbnail => default_thumbnail }
     collection = Collection.new(rec)
     collection.save
     append_to_users_log(collection)
 
     begin
-      UserMailer.deliver_new_submission(current_user, collection)
+      UserMailer.new_submission(current_user, collection).deliver
     rescue Exception => msg
-      logger.error("**** ERROR: Can't send email: " + msg)
+      logger.error("**** ERROR: Can't send email: " + msg.to_s)
     end
     redirect_to :action => 'confirm_submission', :id => collection.id, :controller => 'collections' #confirm_submission_path
   end
@@ -65,7 +65,7 @@ class CollectionsController < ApplicationController
     uploaded_file = save_file(file_name, project_name)
     resubmit_file(id, uploaded_file, project_name, project_url, default_thumbnail, notes)
     begin
-      UserMailer.deliver_resubmit(current_user, Collection.find(id))
+      UserMailer.resubmit(current_user, Collection.find(id)).deliver
     rescue Exception => msg
       logger.error("**** ERROR: Can't send email: " + msg)
     end
@@ -81,7 +81,7 @@ class CollectionsController < ApplicationController
     collection = Collection.find(id)
     change_status(id, Collection.to_status_int("Denied"), current_user.id)
     change_notes(id, collection.notes + "\n" + notes)
-    UserMailer.deliver_denied(collection.contributor, collection, notes)
+    UserMailer.denied(collection.contributor, collection, notes).deliver
     redirect_to :action => 'editor'
   end
   
@@ -106,9 +106,9 @@ class CollectionsController < ApplicationController
       begin
         # the message is different when the editor changes the note or the user changes the note.
         if astr[2] == "editor"
-          UserMailer.deliver_editor_changed_note(get_contributor(id), Collection.find(id))
+          UserMailer.editor_changed_note(get_contributor(id), Collection.find(id)).deliver
         else
-          UserMailer.deliver_contributor_changed_note(Collection.find(id))
+          UserMailer.contributor_changed_note(Collection.find(id)).deliver
         end
       rescue Exception => msg
         logger.error("**** ERROR: Can't send email: " + msg)
@@ -142,11 +142,11 @@ class CollectionsController < ApplicationController
 
     begin    
       case Collection.to_status_string(status.to_i)
-      when "In Progress" then UserMailer.deliver_in_progress(get_contributor(id), collection)
-      when "In Peer Review" then UserMailer.deliver_in_peer_review(get_contributor(id), collection)
-      when "Is Staged" then UserMailer.deliver_is_staged(get_contributor(id), collection)
-      when "In Production" then UserMailer.deliver_in_production(get_contributor(id), collection)
-      when "Deleted" then UserMailer.deliver_editor_deletes(get_contributor(id), collection)
+      when "In Progress" then UserMailer.in_progress(get_contributor(id), collection).deliver
+      when "In Peer Review" then UserMailer.in_peer_review(get_contributor(id), collection).deliver
+      when "Is Staged" then UserMailer.is_staged(get_contributor(id), collection).deliver
+      when "In Production" then UserMailer.in_production(get_contributor(id), collection).deliver
+      when "Deleted" then UserMailer.editor_deletes(get_contributor(id), collection).deliver
       else logger.info("status changed to something that doesn't have a confirmation message: #{status}")
       end
     rescue Exception => msg
@@ -161,7 +161,7 @@ class CollectionsController < ApplicationController
   #   # TODO: update record
   #   # TODO: recreate current page (so that this can be used in both contributor and editor pages)
   #   begin
-  #     UserMailer.deliver_editor_changes_note(current_user, "")
+  #     UserMailer.editor_changes_note(current_user, "").deliver
   #   rescue Exception => msg
   #     logger.error("**** ERROR: Can't send email: " + msg)
   #   end
@@ -173,7 +173,7 @@ class CollectionsController < ApplicationController
     change_status(id, Collection.to_status_int("Deleted"))
     append_to_users_log(Collection.find(id))
     begin
-      UserMailer.deliver_contributor_deletes(Collection.find(id))
+      UserMailer.contributor_deletes(Collection.find(id)).deliver
     rescue Exception => msg
       logger.error("**** ERROR: Can't send email: " + msg)
     end
@@ -191,11 +191,11 @@ class CollectionsController < ApplicationController
   private
   
   def submission_error_check(project_name, project_url, file_name)
-    if project_name == "" && project_url == "" && file_name == ""
+    if project_name == "" && project_url == "" && file_name.blank?
       return "The Project Name, Project URL, and File Name fields must not be blank"
-    elsif project_url == "" && file_name == ""
+    elsif project_url == "" && file_name.blank?
       return "The Project URL and File Name fields must not be blank"
-    elsif project_name == "" && file_name == ""
+    elsif project_name == "" && file_name.blank?
       return "The Project Name and File Name fields must not be blank"
     elsif project_name == "" && project_url == ""
       return "The Project Name and Project URL fields must not be blank"
@@ -203,7 +203,7 @@ class CollectionsController < ApplicationController
       return "The Project Name field must not be blank"
     elsif project_url == ""
       return "The Project URL field must not be blank"
-    elsif file_name == ""
+    elsif file_name.blank?
       return "The File Name field must not be blank"
     end
     return ""

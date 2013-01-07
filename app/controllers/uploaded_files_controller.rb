@@ -4,7 +4,7 @@ class UploadedFilesController < ApplicationController
   # GET /uploaded_files
   # GET /uploaded_files.xml
   def index
-    @uploaded_files = UploadedFile.find(:all)
+    @uploaded_files = UploadedFile.all
 
     respond_to do |format|
       format.html # index.html.erb

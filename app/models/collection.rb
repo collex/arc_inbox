@@ -1,5 +1,6 @@
 require 'enum'
 class Collection < ActiveRecord::Base
+	attr_accessible :contributor_id, :last_editor_id, :latest_file_id, :current_status, :classification, :notes, :admin_notes, :project_name, :project_url, :default_thumbnail
   belongs_to :contributor, :class_name => "User"
   belongs_to :last_editor, :class_name => "User"
   belongs_to :latest_file, :class_name => "UploadedFile"
@@ -50,15 +51,15 @@ class Collection < ActiveRecord::Base
   
   def self.create_classification_combo_on_form(f, curr_selection)
     ctrl = classifications.create_combo_on_form(f, :classification)
-    return ctrl.gsub('>#{curr_selection}</option>', ' selected="selected">#{curr_selection}</option>');
+    return ctrl.gsub(">#{curr_selection}</option>", " selected=\"selected\">#{curr_selection}</option>")
   end
   
   def self.get_all
-    Collection.find(:all, :conditions => [ "current_status <> ?", Collection.to_status_int("Deleted") ])
+    Collection.all.where("current_status <> ?", Collection.to_status_int("Deleted"))
   end
   
   def self.get_all_for_contributor(contributor_int)
-    Collection.find(:all, :conditions => [ "contributor_id = ? AND current_status <> ?", contributor_int, Collection.to_status_int("Deleted") ])
+    Collection.all.where("contributor_id = ? AND current_status <> ?", contributor_int, Collection.to_status_int("Deleted"))
   end
   
   def get_orig_filename

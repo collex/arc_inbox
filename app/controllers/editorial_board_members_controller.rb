@@ -4,7 +4,7 @@ class EditorialBoardMembersController < ApplicationController
   # GET /editorial_board_members
   # GET /editorial_board_members.xml
   def index
-    @editorial_board_members = EditorialBoardMember.find(:all)
+    @editorial_board_members = EditorialBoardMember.all
 
     respond_to do |format|
       format.html # index.html.erb

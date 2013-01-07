@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   #  else
   #    new_password = generate_password()
   #    begin
-  #      UserMailer.deliver_new_password(user, new_password)
+  #      UserMailer.new_password(user, new_password).deliver
   #    rescue Exception => msg
   #      logger.error("**** ERROR: Can't send email: " + msg)
   #    end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     acct = params[:account]
     user = User.find(acct)
     begin
-      UserMailer.deliver_account_deleted(user)
+      UserMailer.account_deleted(user).deliver
     rescue Exception => msg
       logger.error("**** ERROR: Can't send email: " + msg)
     end
@@ -82,7 +82,7 @@ class UsersController < ApplicationController
   #
   #  if changed
   #    begin
-  #      UserMailer.deliver_user_account_changed(current_user, curr_real_name, curr_email, curr_institution)
+  #      UserMailer.user_account_changed(current_user, curr_real_name, curr_email, curr_institution).deliver
   #    rescue Exception => msg
   #      logger.error("**** ERROR: Can't send email: " + msg)
   #    end

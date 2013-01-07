@@ -1,5 +1,6 @@
 class UploadedFile < ActiveRecord::Base
   has_one :latest_file
+  attr_accessible :original_name, :received_name
 
   def self.make_received_filename(base_path, orig_path, contributor_rec, project_name)
     folder = "#{sanitize_filename(contributor_rec.real_name)}_#{contributor_rec.id}/#{sanitize_filename(project_name)}"
@@ -39,6 +40,6 @@ class UploadedFile < ActiveRecord::Base
     just_filename = just_filename.downcase
     
     # Finally, replace all non alphanumeric, underscore or periods with underscore
-    just_filename = just_filename.gsub(/[^\w\.\-]/,'_') 
+    return just_filename.gsub(/[^\w\.\-]/,'_')
   end
 end

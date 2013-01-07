@@ -53,6 +53,7 @@ module CollectionsHelper
       triangle = direction == 'down' ?  '&nbsp;▲' : '&nbsp;▼'
     else
       direction = 'down'
+      triangle = ''
     end
     "<a href='/#{page}?direction=#{direction}&amp;field=#{fieldname}' class='collections'>#{fieldname}</a>#{triangle}"
   end
