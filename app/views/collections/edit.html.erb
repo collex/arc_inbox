@@ -1,9 +1,9 @@
 <h1>Editing collection</h1>
 
-<% form_for(@collection) do |f| %>
-  <%= f.error_messages %>
+<%= errors_for @collection %>
 
-  <p>
+<%= form_for(@collection) do |f| %>
+   <p>
     <%= f.label :contributor_id %><br />
     <%= f.text_field :contributor_id %>
   </p>

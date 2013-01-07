@@ -1,8 +1,7 @@
 <h1>New uploaded_file</h1>
 
-<% form_for(@uploaded_file) do |f| %>
-  <%= f.error_messages %>
-
+<%= errors_for @uploaded_file %>
+<%= form_for(@uploaded_file) do |f| %>
   <p>
     <%= f.label :original_name %><br />
     <%= f.text_field :original_name %>

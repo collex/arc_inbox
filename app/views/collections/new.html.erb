@@ -1,8 +1,7 @@
 <h1>New collection</h1>
 
-<% form_for(@collection) do |f| %>
-  <%= f.error_messages %>
-
+<%= errors_for @collection %>
+<%= form_for(@collection) do |f| %>
   <p>
     <%= f.label :contributor_id %><br />
     <%= f.text_field :contributor_id %>

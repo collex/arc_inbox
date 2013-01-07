@@ -4,6 +4,10 @@ ArcInbox::Application.routes.draw do
 	resources :editorial_board_members
 	resources :uploaded_files
 	resources :collections do
+		member do
+			get 'details'
+			get 'resubmit'
+		end
 		collection do
 			post 'new_submission'
 			post 'resubmit_submission'
@@ -17,6 +21,7 @@ ArcInbox::Application.routes.draw do
 	end
 #	resource :session
 
+	post 'users/delete', controller: 'users', action: 'delete'
   put 'suspend', :controller => 'users', :action => 'update_account'
   put 'unsuspend', :controller => 'users', :action => 'update_account'
   delete 'purge', :controller => 'users', :action => 'update_account'
@@ -28,7 +33,7 @@ ArcInbox::Application.routes.draw do
 	#get '/logout', :controller => 'sessions', :action => 'destroy'
 	get '/contributor', :controller => 'collections', :action => 'contributor'
 	get '/editor', :controller => 'collections', :action => 'editor'
-	get '/resubmit', :controller => 'collections', :action => 'resubmit'
+	#get '/resubmit', :controller => 'collections', :action => 'resubmit'
 	#get '/forgot_password', :controller => 'users', :action => 'forgot_password'
 	get '/update_account', :controller => 'users', :action => 'update_account'
 	get '/delete_account', :controller => 'users', :action => 'delete_account'

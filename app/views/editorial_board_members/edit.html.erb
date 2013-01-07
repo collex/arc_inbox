@@ -1,8 +1,7 @@
 <h1>Editing Editorial Board Member</h1>
 
-<% form_for(@editorial_board_member) do |f| %>
-  <%= f.error_messages %>
-
+<%= errors_for @editorial_board_member %>
+<%= form_for(@editorial_board_member) do |f| %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
@@ -13,7 +12,7 @@
   </p>
   <p>
     <%= f.label :classification %><br />
-	<%= Collection.create_classification_combo_on_form(f, params[:classification]) %> 
+	<%= raw Collection.create_classification_combo_on_form(f, params[:classification]) %>
   </p>
   <p>
     <%= f.submit "Update" %>

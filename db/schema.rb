@@ -19,8 +19,8 @@ ActiveRecord::Schema.define(:version => 20130104150828) do
     t.integer  "latest_file_id"
     t.integer  "current_status"
     t.text     "notes"
-    t.datetime "created_at",                                       :null => false
-    t.datetime "updated_at",                                       :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.text     "admin_notes"
     t.string   "project_name"
     t.string   "project_url"
@@ -32,15 +32,15 @@ ActiveRecord::Schema.define(:version => 20130104150828) do
     t.string   "name"
     t.string   "email"
     t.decimal  "classification", :precision => 10, :scale => 0
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "uploaded_files", :force => true do |t|
     t.string   "original_name"
     t.string   "received_name"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|

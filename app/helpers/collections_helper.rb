@@ -5,7 +5,7 @@ module CollectionsHelper
     str = str.gsub(" ", '&nbsp;')
     str = str.gsub("\n", '<br />')
     str = str.gsub("\t", '&nbsp;&nbsp;&nbsp;&nbsp;')
-    return str
+    return raw(str)
   end
   
   def sort_by(collection_arr, field_str, direction_str)
@@ -55,7 +55,7 @@ module CollectionsHelper
       direction = 'down'
       triangle = ''
     end
-    "<a href='/#{page}?direction=#{direction}&amp;field=#{fieldname}' class='collections'>#{fieldname}</a>#{triangle}"
+    raw "<a href='/#{page}?direction=#{direction}&amp;field=#{fieldname}' class='collections'>#{fieldname}</a>#{triangle}"
   end
   
   private

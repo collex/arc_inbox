@@ -130,7 +130,7 @@ class UserMailer < ActionMailer::Base
 	private
 	def create_to_list_with_editors_and_board(user_email, classification_int)
 		to_list = create_to_list_with_editors(user_email)
-		board_list = EditorialBoardMember.all.where("classification = ?", classification_int)
+		board_list = EditorialBoardMember.where("classification = ?", classification_int).all
 		board_list.each { |member|
 			to_list.insert(-1, member.email)
 		}
@@ -144,7 +144,7 @@ class UserMailer < ActionMailer::Base
 	end
 
 	def create_editor_list
-		editor_list = User.all.where("role = ?", User.to_role_int("Editor"))
+		editor_list = User.where("role = ?", User.to_role_int("Editor")).all
 		to_list = Array.new
 		editor_list.each { |user|
 			to_list.insert(-1, user.email)

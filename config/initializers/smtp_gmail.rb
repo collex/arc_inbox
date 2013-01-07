@@ -2,7 +2,7 @@ MASTER_EDITOR_NAME = SITE_SPECIFIC['master_editor']['name']
 MASTER_EDITOR_EMAIL = SITE_SPECIFIC['master_editor']['email']
 WEBMASTER_EMAIL = SITE_SPECIFIC['webmaster']['email']
 
-ActionMailer::Base.delivery_method = :smtp
+ActionMailer::Base.delivery_method = :smtp if Rails.env == 'production'
 ActionMailer::Base.smtp_settings = { 
   :address => "localhost", 
   :port => 25, 

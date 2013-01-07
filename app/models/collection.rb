@@ -55,11 +55,11 @@ class Collection < ActiveRecord::Base
   end
   
   def self.get_all
-    Collection.all.where("current_status <> ?", Collection.to_status_int("Deleted"))
+    Collection.where("current_status <> ?", Collection.to_status_int("Deleted")).all
   end
   
   def self.get_all_for_contributor(contributor_int)
-    Collection.all.where("contributor_id = ? AND current_status <> ?", contributor_int, Collection.to_status_int("Deleted"))
+    Collection.where("contributor_id = ? AND current_status <> ?", contributor_int, Collection.to_status_int("Deleted")).all
   end
   
   def get_orig_filename
