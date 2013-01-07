@@ -36,6 +36,10 @@ master_editor:
 webmaster:
   email: "webmaster@example.com"
 
+mail_intercept:
+  deliver_email: false
+  email_list: 'all-emails@example.com'
+
 ##########################
 ### Skin
 ##########################
