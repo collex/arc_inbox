@@ -21,12 +21,11 @@
 
 <%   @collections = Collection.get_all() -%>
 <%   @is_editor = true -%>
-<br />
-<%= render :partial => "history" %>
-<hr />
 <h2>Account Administration:</h2>
 <div class="navigation">
-	<%= link_to "Create a new user account", signup_path %><%= link_divider() %>
-	<%= link_to "Disable a user account", delete_account_path %><%= link_divider() %>
-	<%= link_to "Maintain Editorial Board", maintain_editorial_board_path %>
+    <%= link_to "Create a new user account", signup_path %><%= link_divider() %>
+    <%= link_to "Disable a user account", delete_account_path %><%= link_divider() %>
+    <%= link_to "Maintain Editorial Board", maintain_editorial_board_path %>
 </div>
+<hr />
+<%= render :partial => "history" %>
