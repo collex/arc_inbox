@@ -46,6 +46,36 @@ def set_application(section, skin)
 	set :skin, skin
 end
 
+desc "Print out a menu of all the options that a user probably wants."
+task :menu do
+	tasks = {
+		'1' => { name: "cap edge_rack", computer: 'edge_rack', skin: 'arc_inbox' },
+		'2' => { name: "cap edge", computer: 'edge_tamu', skin: 'arc_inbox' }
+	}
+
+	tasks.each { |key, value|
+		puts "#{key}. #{value[:name]}"
+	}
+
+	print "Choose deployment type: "
+	begin
+		system("stty raw -echo")
+		option = STDIN.getc
+	ensure
+		system("stty -raw echo")
+	end
+	puts ""
+
+	value = tasks[option]
+	if !value.nil?
+		set_application(value[:computer], value[:skin])
+		puts "Deploying..."
+		after :menu, 'deploy'
+	else
+		puts "Not deploying. Please select a menu entry."
+	end
+end
+
 desc "Run tasks in production environment (there's no separate edge server for this project)."
 task :edge do
 	set_application('edge_tamu', 'arc_inbox')
