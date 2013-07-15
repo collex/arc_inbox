@@ -34,12 +34,12 @@ module ApplicationHelper
   end
   
   def main_editor_link_clear
-    return "Project Manager #{MASTER_EDITOR_NAME} <#{MASTER_EDITOR_EMAIL}>"
+    return "ARC Project Manager #{MASTER_EDITOR_NAME} <#{MASTER_EDITOR_EMAIL}>"
   end
   
   def main_editor_link
     #logger.info("main_editor_link: #{MASTER_EDITOR_NAME} #{MASTER_EDITOR_EMAIL}")
-    "#{js_antispam_email_link(MASTER_EDITOR_NAME, MASTER_EDITOR_EMAIL, 'Project Manager')}"
+    "#{js_antispam_email_link(MASTER_EDITOR_NAME, MASTER_EDITOR_EMAIL, 'ARC Project Manager')}"
   end
   
   def webmaster_link
