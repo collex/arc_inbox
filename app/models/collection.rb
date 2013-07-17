@@ -29,7 +29,7 @@ class Collection < ActiveRecord::Base
   @@classifications = nil
   def self.classifications
     if @@classifications == nil
-      @@classifications = Enum.new([ "[Not Classified]", "American", "Romantic", "Victorian" ])
+      @@classifications = Enum.new([ "[Not Classified]", "American", "Romantic", "Victorian", "MESA", "Literature", "Technical" ])
     end
     return @@classifications
   end
